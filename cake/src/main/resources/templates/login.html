@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Login</title>
+  <meta name="description" content="Giao diện website Teddy’s sẽ là lựa chọn hoàn hảo cho website cửa hàng đồ lưu niệm, Hoa quà tặng, đồ mẹ và bé, siêu thị mini..">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" media="all">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/contact_style.css}">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="inbody">
+  <!--        Header-->
+  <div th:replace="fragments/fragments :: header"></div>
+
+  <div class="bodywrap">
+    <section class="bread-crumb">
+      <span class="crumb-border"></span>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 a-left">
+            <ul class="breadcrumb">
+              <li class="home">
+                <a  href="/" ><span >Trang chủ</span></a>
+                <span class="mr_lr">&nbsp;/&nbsp;</span>
+              </li>
+              <li><strong ><span>Đăng nhập tài khoản</span></strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container margin-bottom-30">
+      <h1 class="title-head title_customers"><span>Đăng nhập tài khoản</span></h1>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="page-login">
+            <div id="login">
+                                <span>
+                                Nếu bạn đã có tài khoản, đăng nhập tại đây.
+                                </span>
+              <form accept-charset="utf-8" th:action="@{/login}" id="customer_login" method="post">
+                <input name="FormType" type="hidden" value="customer_login" />
+                <input name="utf8" type="hidden" value="true" />
+                <div class="form-signup" >
+                </div>
+                <div class="form-signup clearfix">
+<!--                  <fieldset class="form-group">-->
+<!--                    <label>Email <span class="required">*</span></label>-->
+<!--                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" class="form-control form-control-lg" value="" name="email" id="customer_email" placeholder="Email" Required>-->
+<!--                  </fieldset>-->
+                  <fieldset class="form-group">
+                    <label>User <span class="required">*</span></label>
+                    <input class="form-control form-control-lg" name="username"placeholder="User" >
+                  </fieldset>
+                  <fieldset class="form-group">
+                    <label>Mật khẩu <span class="required">*</span></label>
+                    <input type="password" class="form-control form-control-lg" value="" name="password" id="customer_password" placeholder="Mật khẩu" Required>
+                  </fieldset>
+                  <div class="pull-xs-left" style="margin-top: 25px;">
+                    <input class="btn btn-style btn-primary"  type="submit" value="Đăng nhập" />
+                    <a href="/account/register" class="btn-link-style btn-register" style="margin-left: 20px;text-decoration: underline; ">Đăng ký</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 h_recover">
+          <div id="recover-password"  class="form-signup page-login">
+                            <span>
+                            Bạn quên mật khẩu? Nhập địa chỉ email để lấy lại mật khẩu qua email.
+                            </span>
+            <form accept-charset="utf-8" action="/account/recover" id="recover_customer_password" method="post">
+              <input name="FormType" type="hidden" value="recover_customer_password" />
+              <input name="utf8" type="hidden" value="true" />
+              <div class="form-signup" style="color: red;">
+              </div>
+              <div class="form-signup clearfix">
+                <fieldset class="form-group">
+                  <label>Email <span class="required">*</span></label>
+                  <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" class="form-control form-control-lg" value="" name="Email" id="recover-email" placeholder="Email" Required>
+                </fieldset>
+              </div>
+              <div class="action_bottom">
+                <input class="btn btn-style btn-primary" style="margin-top: 28px;" type="submit" value="Lấy lại mật khẩu" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!--        Fotter-->
+  <div th:replace="fragments/fragments :: footer"></div>
+</div>
+<script th:src="@{/js/config.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>
