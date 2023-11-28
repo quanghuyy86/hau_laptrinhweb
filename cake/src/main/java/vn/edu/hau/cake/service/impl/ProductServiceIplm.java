@@ -1,4 +1,4 @@
-package vn.edu.hau.cake.service;
+package vn.edu.hau.cake.service.impl;
 
 import jakarta.transaction.Transactional;
 import java.io.File;
@@ -13,15 +13,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.HtmlUtils;
 import vn.edu.hau.cake.model.Product;
 import vn.edu.hau.cake.model.ProductImages;
 import vn.edu.hau.cake.repository.ProductRepository;
+import vn.edu.hau.cake.service.ProductService;
 
 @Service
-public class ProductServiceIplm implements ProductService{
+public class ProductServiceIplm implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
@@ -79,7 +81,6 @@ public class ProductServiceIplm implements ProductService{
                 product1.get().setPriceSale(product.getPriceSale());
                 product1.get().setDetail(HtmlUtils.htmlEscape(product.getDetail()));
                 product1.get().setShortDes(HtmlUtils.htmlEscape(product.getShortDes()));
-                product1.get().setHot(product.getHot());
                 product1.get().setCategories(product.getCategories());
                 product1.get().setStatus(product.getStatus());
 
@@ -122,7 +123,9 @@ public class ProductServiceIplm implements ProductService{
 
     @Override
     public Page<Product> gettAllProduct(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize);
+//        Pageable pageable = PageRequest.of(page, pageSize);
+        Sort sort = Sort.by(Sort.Order.desc("createdDate"));
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
         return productRepository.findAll(pageable);
     }
 
@@ -153,11 +156,16 @@ public class ProductServiceIplm implements ProductService{
         return productRepository.findProductsInCategory3();
     }
 
+    @Override
+    public List<Product> findByCategoryId4() {
+        return productRepository.findProductsInCategory4();
+    }
 
     @Override
-    public List<Product> findByProductHot(){
-        return productRepository.findProductsHot();
+    public List<Product> findByCategoryId5() {
+        return productRepository.findProductsInCategory5();
     }
+
 
     @Override
     public List<Product> saveAll(List<Product> entities) {

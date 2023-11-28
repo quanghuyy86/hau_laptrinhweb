@@ -55,4 +55,6 @@ public class AdminCategoryController {
         categoryService.deleteById(id);
         return "redirect:/admin/categorieslist";
     }
+
+
 }

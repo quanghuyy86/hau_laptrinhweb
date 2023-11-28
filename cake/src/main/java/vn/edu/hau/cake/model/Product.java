@@ -28,11 +28,11 @@ public class Product extends BaseEntity{
     @Column(name = "avatar", nullable = true)
     private String avatar;
 
+    @Column(name = "is_hot", nullable = true)
+    private Boolean isHot = false;
+
     @Column(name = "seo", length = 1000, nullable = true)
     private String seo;
-
-    @Column(name = "is_hot", nullable = true)
-    private Boolean isHot = Boolean.FALSE;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id") //khóa ngoại chỉ đến khóa chính
@@ -125,19 +125,18 @@ public class Product extends BaseEntity{
         this.seo = seo;
     }
 
-    public Boolean getHot() {
-        return isHot;
-    }
-
-    public void setHot(Boolean hot) {
-        isHot = hot;
-    }
-
     public Categories getCategories() {
         return categories;
     }
 
     public void setCategories(Categories categories) {
         this.categories = categories;
+    }
+    public Boolean getHot() {
+        return isHot;
+    }
+
+    public void setHot(Boolean hot) {
+        isHot = hot;
     }
 }

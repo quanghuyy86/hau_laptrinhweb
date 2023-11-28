@@ -1,12 +1,15 @@
-package vn.edu.hau.cake.service;
+package vn.edu.hau.cake.service.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.edu.hau.cake.dto.Cart;
 import vn.edu.hau.cake.dto.CartItem;
@@ -14,12 +17,10 @@ import vn.edu.hau.cake.model.SaleOrder;
 import vn.edu.hau.cake.model.SaleOrderProducts;
 import vn.edu.hau.cake.repository.ProductRepository;
 import vn.edu.hau.cake.repository.SaleOrderRepository;
-
-import java.util.List;
-import java.util.Optional;
+import vn.edu.hau.cake.service.SaleOderService;
 
 @Service
-public class SaleOderServiceIplm implements SaleOderService{
+public class SaleOderServiceIplm implements SaleOderService {
     @Autowired
     private SaleOrderRepository saleOrderRepository;
 
@@ -82,7 +83,8 @@ public class SaleOderServiceIplm implements SaleOderService{
 
     @Override
     public Page<SaleOrder> gettAllSaleorder(int page, int pageSize){
-        Pageable pageable = PageRequest.of(page, pageSize);
+        Sort sort = Sort.by(Sort.Order.desc("createdDate"));
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
         return saleOrderRepository.findAll(pageable);
     }
 
@@ -118,12 +120,19 @@ public class SaleOderServiceIplm implements SaleOderService{
 
     @Override
     public void deleteById(Integer integer) {
-        saleOrderRepository.deleteById(integer);
+        Optional<SaleOrder> saleOrderOptional = saleOrderRepository.findById(integer);
+        if (saleOrderOptional.isPresent()) {
+            SaleOrder saleOrder = saleOrderOptional.get();
+            saleOrder.deleteAllSaleOrderProducts(); // Xóa tất cả SaleOrderProducts liên quan
+            saleOrderRepository.deleteById(integer); // Xóa SaleOrder chính
+        }
     }
+
 
     @Override
     public void delete(SaleOrder entity) {
-        saleOrderRepository.delete(entity);
+        entity.deleteAllSaleOrderProducts();
+        saleOrderRepository.deleteById(entity.getId());
     }
 
     @Override

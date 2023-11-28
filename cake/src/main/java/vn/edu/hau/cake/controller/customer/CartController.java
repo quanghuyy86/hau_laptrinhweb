@@ -216,10 +216,19 @@ public class CartController {
         return paymentUrl;
     }
 
-
-    @RequestMapping(value = "/success", method = RequestMethod.GET)
-    public String checkOutSuccess(final Model model){
-        return "checkoutsuccess";
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    public String check(final Model model,
+                        final HttpServletRequest request){
+        String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
+        if (vnp_ResponseCode != null && vnp_ResponseCode.equals("00")) {
+            return "redirect:/success";
+        } else {
+            HttpSession session = request.getSession();
+            Integer id = (Integer) session.getAttribute("id");
+            saleOderService.deleteById(id);
+            session.setAttribute("id", null);
+            return "redirect:/failure";
+        }
     }
 
     @RequestMapping(value = "/checkout", method = RequestMethod.POST)
@@ -247,7 +256,7 @@ public class CartController {
 
                 saleOrder.addSaleOrderProducts(saleOrderProducts);
             } else {
-                // Xử lý trường hợp không tìm thấy sản phẩm (Optional rỗng) nếu cần.
+//                return "redirect:/home";
             }
 
         }
@@ -255,15 +264,19 @@ public class CartController {
             String urlVnPay = createPayment(request);
             session.setAttribute("cart", null);
             session.setAttribute("totalItems", 0);
+
             saleOderService.save(saleOrder);
+            Integer id = saleOrder.getId();
+            session.setAttribute("id", id);
             return "redirect:" + urlVnPay;
         }
-
             saleOderService.save(saleOrder);
             session.setAttribute("cart", null);
             session.setAttribute("totalItems", 0);
             return "redirect:/success";
     }
+
+
 
 
     @RequestMapping(value = { "/cart/deleteitem" }, method = RequestMethod.POST)
@@ -296,6 +309,14 @@ public class CartController {
         return ResponseEntity.ok(jsonResult);
     }
 
+    @RequestMapping(value = "/success", method = RequestMethod.GET)
+    public String checkOutSuccess(final Model model){
+        return "checkoutsuccess";
+    }
 
+    @RequestMapping(value = "/failure", method = RequestMethod.GET)
+    public String checkOutFaild(final Model model){
+        return "failure";
+    }
 
 }

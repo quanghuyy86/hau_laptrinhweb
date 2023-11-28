@@ -1,18 +1,14 @@
 package vn.edu.hau.cake.controller.customer;
 
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import vn.edu.hau.cake.model.Contact;
-import vn.edu.hau.cake.repository.ContactRepository;
 import vn.edu.hau.cake.service.ContactService;
-
-import java.io.IOException;
-import java.util.Map;
 
 @Controller
 public class ContactController {
@@ -23,7 +19,7 @@ public class ContactController {
         model.addAttribute("contactEntity", new Contact());
         return "contact";
     }
-    @RequestMapping(value = "contactUs", method = RequestMethod.POST)
+    @RequestMapping(value = "/contactUs", method = RequestMethod.POST)
     public String contactUs(final @ModelAttribute("contactEntity")Contact contact,
                             final Model model) throws IOException{
         contactService.save(contact);

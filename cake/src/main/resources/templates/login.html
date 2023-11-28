@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,9 +43,6 @@
         <div class="col-lg-6">
           <div class="page-login">
             <div id="login">
-                                <span>
-                                Nếu bạn đã có tài khoản, đăng nhập tại đây.
-                                </span>
               <form accept-charset="utf-8" th:action="@{/login}" id="customer_login" method="post">
                 <input name="FormType" type="hidden" value="customer_login" />
                 <input name="utf8" type="hidden" value="true" />
@@ -57,7 +54,7 @@
 <!--                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" class="form-control form-control-lg" value="" name="email" id="customer_email" placeholder="Email" Required>-->
 <!--                  </fieldset>-->
                   <fieldset class="form-group">
-                    <label>User <span class="required">*</span></label>
+                    <label>Tên đăng nhập<span class="required">*</span></label>
                     <input class="form-control form-control-lg" name="username"placeholder="User" >
                   </fieldset>
                   <fieldset class="form-group">
@@ -66,7 +63,7 @@
                   </fieldset>
                   <div class="pull-xs-left" style="margin-top: 25px;">
                     <input class="btn btn-style btn-primary"  type="submit" value="Đăng nhập" />
-                    <a href="/account/register" class="btn-link-style btn-register" style="margin-left: 20px;text-decoration: underline; ">Đăng ký</a>
+                    <a th:href="@{/register}" class="btn-link-style btn-register" style="margin-left: 20px;text-decoration: underline; ">Đăng ký</a>
                   </div>
                 </div>
               </form>

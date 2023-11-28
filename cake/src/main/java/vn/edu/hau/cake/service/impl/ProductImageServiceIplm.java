@@ -1,15 +1,15 @@
-package vn.edu.hau.cake.service;
+package vn.edu.hau.cake.service.impl;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.hau.cake.model.ProductImages;
 import vn.edu.hau.cake.repository.ProductImageRepository;
-
-import java.util.List;
-import java.util.Optional;
+import vn.edu.hau.cake.service.ProductImageService;
 
 @Service
-public class ProductImageServiceIplm implements ProductImageService{
+public class ProductImageServiceIplm implements ProductImageService {
     @Autowired
     private ProductImageRepository productImageRepository;
 

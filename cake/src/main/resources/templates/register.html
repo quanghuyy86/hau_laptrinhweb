@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,7 +44,7 @@
           <div class="page-login">
             <div id="login">
               <span>Nếu chưa có tài khoản vui lòng đăng ký tại đây</span>
-              <form accept-charset="utf-8" action="/account/register" id="customer_register" method="post">
+              <form accept-charset="utf-8" th:action="@{/register}" th:object="${user}" id="customer_register" method="post">
                 <input name="FormType" type="hidden" value="customer_register">
                 <input name="utf8" type="hidden" value="true"><input type="hidden" id="Token-9831e71b9818404fa37c5e7c2d98f9c8" name="Token" value="03AGdBq24XB419pexgoc_D9a3m0zoAIjuWg6rw2nzOt3dPaYTI0JmV0q_YPBHt8tZsLIqva0nIYKqnFjUokv7O2KceJPxDldNX9lzdsh3NPTJN0VSW3Sfdf6fH4lbHlChvtNVL2nuwx_gEtyu-zkQeFrayO5faC940RJ1ZFhWhD49keed9CE2YO_mx7Afg0V5V-EhhJlvTH1BV6kDSXZt9v2ooybArjW6boF92B4nVMnrD1OzkuyFp1leERiVuDOHLKTG8KStTBRi2Cn3eQqPSbPSGvLKEbO-0HdHoKJEsyg8kLPuy4xblruyEHDQtL28iFPQnxxMTzbAaqa1Fn8Uj0ZBKWh9aJnyuHl6QkhV1_LHPl9yE-yKjzEAPSN0KCsoQS6lwLA6lAQZKwATOJvn2tSKCcS_8Ovx61Q"><script src="https://www.google.com/recaptcha/api.js?render=6Ldtu4IUAAAAAMQzG1gCw3wFlx_GytlZyLrXcsuK"></script>
                 <script>
@@ -61,14 +61,8 @@
                   <div class="row">
                     <div class="col-md-6">
                       <fieldset class="form-group">
-                        <label> Họ<span class="required">*</span></label>
-                        <input type="text" class="form-control form-control-lg" value="" name="lastName" id="lastName" placeholder="" required="">
-                      </fieldset>
-                    </div>
-                    <div class="col-md-6">
-                      <fieldset class="form-group">
-                        <label>Tên <span class="required">*</span></label>
-                        <input type="text" class="form-control form-control-lg" value="" name="firstName" id="firstName" placeholder="" required="">
+                        <label>Họ và tên <span class="required">*</span></label>
+                        <input type="text" th:field="*{fullName}" class="form-control form-control-lg" name="firstName" id="firstName">
                       </fieldset>
                     </div>
                   </div>
@@ -76,27 +70,33 @@
                     <div class="col-md-6">
                       <fieldset class="form-group">
                         <label>Email <span class="required">*</span></label>
-                        <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" class="form-control form-control-lg" value="" name="email" id="email" placeholder="" required="">
+                        <input type="email" th:field="*{email}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" class="form-control form-control-lg" value="" name="email" id="email" placeholder="" required="">
                       </fieldset>
                     </div>
                     <div class="col-md-6">
                       <fieldset class="form-group">
-                        <label>Mật khẩu <span class="required">*</span> </label>
-                        <input type="password" class="form-control form-control-lg" value="" name="password" id="password" placeholder="" required="">
+                        <label>Số điện thoại <span class="required">*</span> </label>
+                        <input type="text" th:field="*{telephone}" class="form-control form-control-lg" name="phone" id="phone" placeholder="" required="">
                       </fieldset>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
                       <fieldset class="form-group">
-                        <label>Số điện thoại <span class="required">*</span> </label>
-                        <input type="text" class="form-control form-control-lg" name="phone" id="phone" placeholder="" required="">
+                        <label>Tên đăng nhập<span class="required">*</span></label>
+                        <input type="text" th:field="*{userName}" class="form-control form-control-lg" value="" name="username" id="username" placeholder="" required="">
+                      </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                      <fieldset class="form-group">
+                        <label>Mật khẩu <span class="required">*</span> </label>
+                        <input type="password" th:field="*{passWord}" class="form-control form-control-lg" value="" name="password" id="password" placeholder="" required="">
                       </fieldset>
                     </div>
                   </div>
                   <div class=" col-lg-6 col-md-6 col-xs-12 text-xs-left" style="margin-top:30px; padding: 0">
                     <button type="summit" value="Đăng ký" class="btn  btn-style btn-primary">Đăng ký</button>
-                    <a href="/account/login" class="btn-link-style btn-register" style="margin-left: 20px;text-decoration: underline; ">Đăng nhập</a>
+                    <a href="/login" class="btn-link-style btn-register" style="margin-left: 20px;text-decoration: underline; ">Đăng nhập</a>
                   </div>
                 </div>
               </form>

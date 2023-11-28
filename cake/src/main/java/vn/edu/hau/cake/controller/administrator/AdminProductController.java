@@ -48,6 +48,7 @@ public class AdminProductController {
         model.addAttribute("categories", listCategories);
         return "addproduct";
     }
+
     @RequestMapping(value = "/admin/addproduct", method = RequestMethod.POST)
     public String addProducts(final Model model,
                               final @ModelAttribute("product") Product product,
@@ -81,9 +82,8 @@ public class AdminProductController {
 
     @RequestMapping(value = "/admin/delete/{id}", method = RequestMethod.GET)
     String deleteProduct(final @PathVariable("id") Integer id){
-//        productService.deleteById(id);
+        productService.deleteById(id);
         return "redirect:/admin/productlist";
     }
-
 
 }

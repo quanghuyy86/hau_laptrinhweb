@@ -21,12 +21,8 @@ public class User {
   private String userName;
   @Column(name = "password")
   private String passWord;
-  @Column(name = "enabled")
-  private Boolean enabled;
   @Column(name = "fullname")
   private String fullName;
-  @Column(name = "gender")
-  private Boolean gender;
   @Column(name = "email")
   private String email;
   @Column(name = "telephone")
@@ -39,14 +35,12 @@ public class User {
     // TODO Auto-generated constructor stub
   }
 
-  public User(Long id, String userName, String passWord, Boolean enabled, String fullName, Boolean gender, String email, String telephone, Set<User_Role> userRoles) {
+  public User(Long id, String userName, String passWord, String fullName, String email, String telephone, Set<User_Role> userRoles) {
     super();
     this.id = id;
     this.userName = userName;
     this.passWord = passWord;
-    this.enabled = enabled;
     this.fullName = fullName;
-    this.gender = gender;
     this.email = email;
     this.telephone = telephone;
     this.userRoles = userRoles;
@@ -76,28 +70,12 @@ public class User {
     this.passWord = passWord;
   }
 
-  public Boolean getEnabled() {
-    return enabled;
-  }
-
-  public void setEnabled(Boolean enabled) {
-    this.enabled = enabled;
-  }
-
   public String getFullName() {
     return fullName;
   }
 
   public void setFullName(String fullName) {
     this.fullName = fullName;
-  }
-
-  public Boolean getGender() {
-    return gender;
-  }
-
-  public void setGender(Boolean gender) {
-    this.gender = gender;
   }
 
   public String getEmail() {

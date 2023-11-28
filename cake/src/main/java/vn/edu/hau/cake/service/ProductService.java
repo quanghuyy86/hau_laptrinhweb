@@ -15,12 +15,11 @@ public interface ProductService {
     @Transactional
     Product save(Product entity, MultipartFile avatar, MultipartFile[] picture) throws IOException;
 
-    public Product updateProduct(Integer id,Product product, MultipartFile avatar, MultipartFile[] picture) throws IOException;
+    Product updateProduct(Integer id,Product product, MultipartFile avatar, MultipartFile[] picture) throws IOException;
 
     List<Product> searchProduct(String keyword);
 
     Page<Product> gettAllProduct(int page, int pageSize);
-
 
     Page<Product> searchPageProduct(String keyword, int page, int pageSize);
 
@@ -30,7 +29,9 @@ public interface ProductService {
 
     List<Product> findByCategoryId3();
 
-    List<Product> findByProductHot();
+    List<Product> findByCategoryId4();
+
+    List<Product> findByCategoryId5();
 
     List<Product> saveAll(List<Product> entities);
 

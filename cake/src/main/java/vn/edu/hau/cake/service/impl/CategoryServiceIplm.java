@@ -1,15 +1,15 @@
-package vn.edu.hau.cake.service;
+package vn.edu.hau.cake.service.impl;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.hau.cake.model.Categories;
 import vn.edu.hau.cake.repository.CategoryRepository;
-
-import java.util.List;
-import java.util.Optional;
+import vn.edu.hau.cake.service.CategoryService;
 
 @Service
-public class CategoryServiceIplm implements CategoryService{
+public class CategoryServiceIplm implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 

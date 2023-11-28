@@ -20,9 +20,9 @@ public class DetailController {
     public String detailProduct(final Model model,
                                 final @PathVariable("id") Integer id){
         Optional<Product> detailProduct = productService.findById(id);
-        List<Product> product3 = productService.findByCategoryId3();
+        List<Product> product4 = productService.findByCategoryId4();
         model.addAttribute("product", detailProduct);
-        model.addAttribute("product3", product3);
+        model.addAttribute("product4", product4);
         return "detail";
     }
 

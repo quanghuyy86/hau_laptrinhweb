@@ -25,10 +25,12 @@ public class SecurityConfig {
             auth
                 .requestMatchers(new AntPathRequestMatcher("/*")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ADMIN")
+                .requestMatchers(new AntPathRequestMatcher("/home/**")).hasAuthority("GUEST")
                 .anyRequest().authenticated())
                 .formLogin(login->login.loginPage("/login").loginProcessingUrl("/login").
                 usernameParameter("username").passwordParameter("password").
-                defaultSuccessUrl("/admin/productlist",true));
+                defaultSuccessUrl("/",true))
+                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"));
     return http.build();
   }
   @Bean
@@ -38,8 +40,8 @@ public class SecurityConfig {
         .requestMatchers(new AntPathRequestMatcher("/css/**"))
         .requestMatchers(new AntPathRequestMatcher("/img/**"))
         .requestMatchers(new AntPathRequestMatcher("/js/**"))
-        .requestMatchers(new AntPathRequestMatcher("/uploads/**"))
-        .requestMatchers(new AntPathRequestMatcher("/cart/**"));
+        .requestMatchers(new AntPathRequestMatcher("/uploads/**"));
+//        .requestMatchers(new AntPathRequestMatcher("/cart/**"));
   }
 
 }

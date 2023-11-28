@@ -1,4 +1,4 @@
-package vn.edu.hau.cake.service;
+package vn.edu.hau.cake.service.impl;
 
 
 import java.util.Collection;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.hau.cake.model.CustomUserDetails;
 import vn.edu.hau.cake.model.User;
 import vn.edu.hau.cake.model.User_Role;
+import vn.edu.hau.cake.service.UserService;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

@@ -1,13 +1,12 @@
-package vn.edu.hau.cake.service;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import vn.edu.hau.cake.model.SaleOrder;
-import vn.edu.hau.cake.model.SaleOrderProducts;
-import vn.edu.hau.cake.repository.SaleOderProductsRepository;
+package vn.edu.hau.cake.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import vn.edu.hau.cake.model.SaleOrderProducts;
+import vn.edu.hau.cake.repository.SaleOderProductsRepository;
+import vn.edu.hau.cake.service.SaleOderProductsService;
 
 @Service
 public class SaleOderProductsServiceIplm implements SaleOderProductsService {
@@ -51,6 +50,7 @@ public class SaleOderProductsServiceIplm implements SaleOderProductsService {
 
     @Override
     public void deleteById(Integer integer) {
+
         saleOderProductsRepository.deleteById(integer);
     }
 

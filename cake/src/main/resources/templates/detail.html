@@ -79,26 +79,7 @@
                                                         
                                                     </div>
                                                 </div>
-                                                
-<!--                                                <div class="section owlthumb_relative_product_1 owl_nav_custome1 clearfix ">-->
-<!--                                                    <div id="gallery_02" class=" owl-theme thumbnail-product thumb_product_details thumbdetail_modile_v1 not-thuongdq">-->
-<!--                                                        <div class="item">-->
-<!--                                                            <a href="javascript:void(0)" data-zoom-image="https://bizweb.dktcdn.net/thumb/1024x1024/100/283/016/products/03.jpg?v=1513593701263">-->
-<!--                                                                <img class="lazyload" data-fancybox="gallery"   th:src="@{'http://localhost:8080' + ${product.get().}"  alt="Gấu bông Teddy cute">-->
-<!--                                                            </a>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="item">-->
-<!--                                                            <a href="javascript:void(0)" data-zoom-image="https://bizweb.dktcdn.net/thumb/1024x1024/100/283/016/products/04.jpg?v=1513593701263">-->
-<!--                                                                <img class="lazyload" data-fancybox="gallery"   th:src=""  alt="Gấu bông Teddy cute">-->
-<!--                                                            </a>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="item">-->
-<!--                                                            <a href="javascript:void(0)" data-zoom-image="https://bizweb.dktcdn.net/thumb/1024x1024/100/283/016/products/02.jpg?v=1513593701263">-->
-<!--                                                                <img class="lazyload" data-fancybox="gallery"  th:src=""  alt="Gấu bông Teddy cute">-->
-<!--                                                            </a>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
+
                                             </div>
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 details-pro clearfix">
                                                 <h1 class="title-product clearfix" th:text="${product.get().title}"></h1>
@@ -127,7 +108,7 @@
                                                     </div>
                                                     <div class="product-summary clearfix">
                                                         <div class="rte">
-                                                            <em th:text="${product.get().shortDes}"></em>
+                                                            <em th:utext="${product.get().shortDes}"></em>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -141,9 +122,11 @@
                                                                     <button class="btn_num num_2 button button_qty" onclick="var result = document.getElementById('qtym'); var qtypro = result.value; if( !isNaN( qtypro )) result.value++;return false;" type="button"><i class="fa fa-plus"></i></button>
                                                                 </div>
                                                             </div>
-                                                            <div class="button_actions clearfix">
-                                                                <button type="submit" class="btn btn_base btn_add_cart btn-cart add_to_cart"><span class="text_1">Thêm vào giỏ hàng</span></button>
-                                                            </div>
+                                                            <form action="/cart/add" method="post" >
+                                                                <button class="btn btn-cart btn btn-primary  left-to " title="Chọn sản phẩm" type="button" th:onclick="'AddProductToCart(' + ${product.get().id} + ', 1)'" tabindex="0">
+                                                                    Thêm vào giỏ hàng
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -173,7 +156,7 @@
                                                                             <div class="tab-float clearfix">
                                                                                 <div id="tab-1" class="tab-content clearfix current">
                                                                                     <div class="rte product_getcontent">
-                                                                                        <p th:text="${product.get().detail}"></p>
+                                                                                        <p th:utext="${product.get().detail}"></p>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div id="tab-2" class="tab-content clearfix">
@@ -314,26 +297,25 @@
                                         <div class="aside-item aside_product_new">
                                             <div class="aside-title">
                                                 <h2 class="title-head">
-                                                    <a href="#" title="Hàng mới về">Phụ kiện</a>
+                                                    <a href="#" title="Hàng mới về">Nước Uống</a>
                                                 </h2>
                                             </div>
                                             <div class="aside-content">
                                                 <div class="product-mini-lists">
-                                                    <div class="products" th:each="product3 : ${product3}">
+                                                    <div class="products" th:each="product4 : ${product4}">
                                                         <div class="product-mini-item clearfix   on-sale">
                                                             <a href="#" class="product-img" title="haha" >
-                                                            <img class="lazyload loaded" th:src="@{'http://localhost:8080' + ${product3.avatar}}" data-was-processed="true">
+                                                            <img class="lazyload loaded" th:src="@{'http://localhost:8080' + ${product4.avatar}}" data-was-processed="true">
                                                             </a>
                                                             <div class="product-info">
-                                                                <h3><a href="#"  class="product-name" th:text="${product3.title}"></a></h3>
+                                                                <h3><a href="#"  class="product-name" th:text="${product4.title}"></a></h3>
                                                                 <div class="price-box">
-                                                                    <span class="price f-left"><span class="price product-price" th:text="${product3.priceSale}"></span> </span> <!-- Giá Khuyến mại -->
-                                                                    <span class="old-price  f-left"><del class="sale-price" th:text="${product3.price}"></del> </span> <!-- Giá gốc -->
+                                                                    <span class="price f-left"><span class="price product-price" th:text="${product4.priceSale}"></span> </span> <!-- Giá Khuyến mại -->
+                                                                    <span class="old-price  f-left"><del class="sale-price" th:text="${product4.price}"></del> </span> <!-- Giá gốc -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!-- /.products -->
                                                 </div>
                                             </div>
                                         </div>
@@ -343,55 +325,6 @@
                             
                         </div>
                     </div>
-
-<!--                    <div class="container">-->
-<!--                        <div class="related-product margin-top-20 xs-margin-top-0 margin-bottom-30 clearfix xs-margin-bottom-0 section_base">-->
-<!--                            <div class="heading">-->
-<!--                                <h2><a href="/khuyen-mai-hot" title="Sản phẩm cùng loại">Sản phẩm Hot</a></h2>-->
-<!--                            </div>-->
-<!--                            <div class="products products-view-grid slick_product slickone_first_5 ajax-carousel">-->
-<!--                                <div class="item" th:each="productHot : ${productHot}">-->
-<!--                                    <div class="item_product_mains products-view-grid">-->
-<!--                                        <div class="product-box product-box-zo">-->
-<!--                                            <div class="product-thumbnail">-->
-<!--                                                <div class="sale-flash">Sale</div>-->
-<!--                                                <a class="image_thumb" href="#" title="Nước hoa DG" tabindex="0">-->
-<!--                                                <img class="lazyload loaded" th:src="${'http://localhost:8080' + ${productHot.avatar}}" alt="Nước hoa DG" data-was-processed="true">-->
-<!--                                                </a>-->
-<!--                                            </div>-->
-<!--                                            <div class="product-info a-left">-->
-<!--                                                <h3 class="product-name"><a href="/dau-thom-dg" title="Nước hoa DG" tabindex="0" th:text="${productHot.title}"></a></h3>-->
-<!--                                                <div class="price-box clearfix">-->
-<!--                                                    <div class="special-price f-left">-->
-<!--                                                        <span class="price product-price" th:text="${productHot.price}"></span>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="old-price f-left">                                                           -->
-<!--                                                        <span class="price product-price-old">-->
-<!--                                                        150.000₫            -->
-<!--                                                        </span>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="price-sale-flash f-left">- -->
-<!--                                                        33% -->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="product-action clearfix d-none d-sm-none d-md-none d-lg-block d-xl-block">-->
-<!--                                                <form action="/cart/add" method="post" class="variants form-nut-grid" data-id="product-actions-9387270" enctype="multipart/form-data">          -->
-<!--                                                    <input type="hidden" name="variantId" value="14993333" tabindex="0">-->
-<!--                                                    <button class="btn-buy btn-cart btn btn-primary left-to add_to_cart " title="Mua ngay" tabindex="0">-->
-<!--                                                    Mua ngay-->
-<!--                                                    </button>-->
-<!--                                                    <a title="Xem nhanh" href="/dau-thom-dg" data-handle="dau-thom-dg" class="btn-gray btn_view btn  right-to quick-view" tabindex="0">-->
-<!--                                                    <i class="fa fa-eye"></i>-->
-<!--                                                    </a>-->
-<!--                                                </form>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
                 </div>
             </div>
 
@@ -404,5 +337,6 @@
         <script th:src="@{/js/jquery.elevatezoom308.min.js}"></script>
         <script th:src="@{/js/product_detail.js}"></script>
         <script th:src="@{/js/product_detail.js}"></script>
+        <script th:src="@{/js/store.js}"></script>
     </body>
 </html>

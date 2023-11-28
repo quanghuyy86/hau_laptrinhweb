@@ -45,6 +45,13 @@ public class SaleOrder extends BaseEntity {
 		_saleOrderProducts.setSaleOrder(null);
 		saleOrderProducts.remove(_saleOrderProducts);
 	}
+	public void deleteAllSaleOrderProducts() {
+		for (SaleOrderProducts saleOrderProduct : saleOrderProducts) {
+			saleOrderProduct.setSaleOrder(null);
+		}
+		saleOrderProducts.clear();
+	}
+
 
 	public String getPay() {
 		return pay;

@@ -1,16 +1,17 @@
-package vn.edu.hau.cake.service;
+package vn.edu.hau.cake.service.impl;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.edu.hau.cake.model.Contact;
 import vn.edu.hau.cake.repository.ContactRepository;
-
-import java.util.List;
-import java.util.Optional;
+import vn.edu.hau.cake.service.ContactService;
 
 @Service
 public class ContactServiceIplm implements ContactService {
@@ -27,7 +28,9 @@ public class ContactServiceIplm implements ContactService {
     }
     @Override
     public Page<Contact> gettAllContact(int page, int pageSize){
-        Pageable pageable = PageRequest.of(page, pageSize);
+//        Pageable pageable = PageRequest.of(page, pageSize);
+        Sort sort = Sort.by(Sort.Order.desc("createdDate"));
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
         return contactRepository.findAll(pageable);
     }
 
