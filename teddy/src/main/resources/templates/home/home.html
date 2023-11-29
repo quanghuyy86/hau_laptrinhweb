@@ -160,21 +160,21 @@
                     <div class="section-content d-lg-none d-xl-block d-md-none d-sm-none hidden-xs">
                         <div class="products products-view-grid">
                             <div class="slick_6">
-                                <div class="item" th:each="product : ${product5}">
+                                <div class="item" th:each="product1 : ${product1}">
                                     <div class="product-box product-box-zo">
                                         <div class="product-thumbnail">
                                             <div class="sale-flash new">New</div>
                                             <a class="image_thumb" href="#" title="Vali đẹp cute" tabindex="-1">
-                                                <img class="lazyload" alt="Vali đẹp cute" th:src="@{'http://localhost:8080' + ${product.avatar}}">
+                                                <img class="lazyload" alt="Vali đẹp cute" th:src="@{'http://localhost:8080' + ${product1.avatar}}">
                                             </a>
                                         </div>
                                         <div class="product-info a-left">
                                             <h3 class="product-name">
-                                                <a href="#" tabindex="-1" th:text="${product.title}"></a>
+                                                <a href="#" tabindex="-1" th:text="${product1.title}"></a>
                                             </h3>
                                             <div class="price-box clearfix">
                                                 <div class="special-price f-left">
-                                                    <span class="price product-price" th:text="${#numbers.formatCurrency(product.priceSale)}"></span>
+                                                    <span class="price product-price" th:text="${#numbers.formatCurrency(product1.priceSale)}"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,10 +182,10 @@
 <!--                                            <form action="#" method="get" class="variants form-nut-grid"  enctype="multipart/form-data" >-->
                                             <div class="variants form-nut-grid">
                                                 <input type="hidden" name="variantId" value="14992173" tabindex="-1">
-                                                <button class="btn-buy btn-cart btn btn-primary left-to add_to_cart" tabindex="-1" th:onclick="'AddProductToCart(' + ${product.id} + ', 1)'" >
+                                                <button class="btn-buy btn-cart btn btn-primary left-to add_to_cart" tabindex="-1" th:onclick="'AddProductToCart(' + ${product1.id} + ', 1)'" >
                                                     Thêm vào giỏ hàng
                                                 </button>
-                                                <a title="Xem nhanh" th:href="@{/detailproduct/{id} (id=${product.id})}" data-handle="vali-dep-cute" class="btn-gray btn_view btn  right-to quick-view" tabindex="-1">
+                                                <a title="Xem nhanh" th:href="@{/detailproduct/{id} (id=${product1.id})}" data-handle="vali-dep-cute" class="btn-gray btn_view btn  right-to quick-view" tabindex="-1">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
 <!--                                            </form>-->
@@ -293,50 +293,6 @@
                                     <div class="section-content">
                                         <div class="products products-view-grid">
                                             <div class="slick_product slicktwo_frist">
-                                                <div th:each="product1 : ${product1}">
-                                                    <div class="item" style="width: 100%; display: inline-block;">
-                                                        <div class="product-box product-box-zo">
-                                                            <div class="product-thumbnail">
-                                                                <div class="sale-flash new">New</div>
-                                                                <a class="image_thumb" href="#" tabindex="0">
-                                                                    <img class="lazyload" th:src="@{'http://localhost:8080' + ${product1.avatar}} "data-was-processed="true">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-info a-left">
-                                                                <h3 class="product-name">
-                                                                    <a href="#" tabindex="-1" th:text="${product1.title}"></a>
-                                                                </h3>
-                                                                <div class="price-box clearfix">
-                                                                    <div class="special-price f-left">
-                                                                        <span class="price product-price" th:text="${#numbers.formatCurrency(product1.price)}"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="product-action clearfix d-none d-sm-none d-md-none d-lg-block d-xl-block">
-                                                                <div  class="variants form-nut-grid" data-id="product-actions-9387657">
-                                                                    <input class="hidden" type="hidden" name="variantId" value="14993831" tabindex="0">
-                                                                    <button class="btn btn-cart btn btn-primary  left-to " title="Chọn sản phẩm" type="button" th:onclick="'AddProductToCart(' + ${product1.id} + ', 1)'" tabindex="0">
-                                                                        Thêm vào giỏ hàng
-                                                                    </button>
-                                                                    <a title="Xem nhanh" th:href="@{/detailproduct/{id} (id = ${product1.id})}" data-handle="gau-bong-teddy-cute" class="btn-gray btn_view btn  right-to quick-view" tabindex="0">
-                                                                        <i class="fa fa-eye"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="section_blog_index">
-                                    <div class="heading">
-                                        <h2><a href="#" >Gấu Bông Teddy Lena</a></h2>
-                                    </div>
-                                    <div class="section-content">
-                                        <div class="products products-view-grid">
-                                            <div class="slick_product slicktwo_frist">
                                                 <div th:each="product3 : ${product3}">
                                                     <div class="item" style="width: 100%; display: inline-block;">
                                                         <div class="product-box product-box-zo">
@@ -352,7 +308,7 @@
                                                                 </h3>
                                                                 <div class="price-box clearfix">
                                                                     <div class="special-price f-left">
-                                                                        <span class="price product-price" th:text="${#numbers.formatCurrency(product3.price)}"></span>
+                                                                        <span class="price product-price" th:text="${#numbers.formatCurrency(product3.priceSale)}"></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -374,6 +330,50 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="section_blog_index">
+                                    <div class="heading">
+                                        <h2><a href="#" >Gấu Bông Teddy Lena</a></h2>
+                                    </div>
+                                    <div class="section-content">
+                                        <div class="products products-view-grid">
+                                            <div class="slick_product slicktwo_frist">
+                                                <div th:each="product5 : ${product5}">
+                                                    <div class="item" style="width: 100%; display: inline-block;">
+                                                        <div class="product-box product-box-zo">
+                                                            <div class="product-thumbnail">
+                                                                <div class="sale-flash new">New</div>
+                                                                <a class="image_thumb" href="#" tabindex="0">
+                                                                    <img class="lazyload" th:src="@{'http://localhost:8080' + ${product5.avatar}} "data-was-processed="true">
+                                                                </a>
+                                                            </div>
+                                                            <div class="product-info a-left">
+                                                                <h3 class="product-name">
+                                                                    <a href="#" tabindex="-1" th:text="${product5.title}"></a>
+                                                                </h3>
+                                                                <div class="price-box clearfix">
+                                                                    <div class="special-price f-left">
+                                                                        <span class="price product-price" th:text="${#numbers.formatCurrency(product5.price)}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-action clearfix d-none d-sm-none d-md-none d-lg-block d-xl-block">
+                                                                <div  class="variants form-nut-grid" data-id="product-actions-9387657">
+                                                                    <input class="hidden" type="hidden" name="variantId" value="14993831" tabindex="0">
+                                                                    <button class="btn btn-cart btn btn-primary  left-to " title="Chọn sản phẩm" type="button" th:onclick="'AddProductToCart(' + ${product5.id} + ', 1)'" tabindex="0">
+                                                                        Thêm vào giỏ hàng
+                                                                    </button>
+                                                                    <a title="Xem nhanh" th:href="@{/detailproduct/{id} (id = ${product5.id})}" data-handle="gau-bong-teddy-cute" class="btn-gray btn_view btn  right-to quick-view" tabindex="0">
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="sec_product_shock">
@@ -384,32 +384,32 @@
                                         <div class="section-content">
                                             <div class="products products-view-grid">
                                                 <div class="slick_pro_shock">
-                                                    <div class="item item_off" th:each="product4 : ${product4}">
+                                                    <div class="item item_off" th:each="product5 : ${product5}">
                                                         <div class="product-box product-box-zo product-box-shock">
                                                             <div class="product-thumbnail">
                                                                 <div class="sale-flash hot">Hot</div>
                                                                 <a class="image_thumb" href="/tui-nho-nhan-mat-quy" title="Túi nhỏ nhắn mặt quỷ" tabindex="-1">
-                                                                    <img class="lazyload" th:src="@{'http://localhost:8080' + ${product4.avatar}}" alt="Túi nhỏ nhắn mặt quỷ">
+                                                                    <img class="lazyload" th:src="@{'http://localhost:8080' + ${product5.avatar}}" alt="Túi nhỏ nhắn mặt quỷ">
                                                                 </a>
                                                             </div>
                                                             <div class="product-info a-left">
-                                                                <h3 class="product-name"><a href="#"  tabindex="-1" th:text="${product4.title}"></a></h3>
+                                                                <h3 class="product-name"><a href="#"  tabindex="-1" th:text="${product5.title}"></a></h3>
                                                                 <div class="price-box clearfix">
                                                                     <div class="special-price f-left">
-                                                                        <span class="price product-price" th:text="${#numbers.formatCurrency(product4.priceSale)}"></span>
+                                                                        <span class="price product-price" th:text="${#numbers.formatCurrency(product5.priceSale)}"></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="product-summary-list">
-                                                                <span th:utext="${product4.shortDes}"></span>
+                                                                <span th:utext="${product5.shortDes}"></span>
                                                             </div>
                                                             <div class="product-action clearfix d-none d-sm-none d-md-none d-lg-block d-xl-block">
                                                                 <form action="/cart/add" method="post" class="variants form-nut-grid" data-id="product-actions-9387145" enctype="multipart/form-data">
                                                                     <input type="hidden" name="variantId" value="14993139" tabindex="-1">
-                                                                    <button class="btn btn-cart btn btn-primary  left-to " title="Chọn sản phẩm" type="button" th:onclick="'AddProductToCart(' + ${product4.id} + ', 1)'" tabindex="0">
+                                                                    <button class="btn btn-cart btn btn-primary  left-to " title="Chọn sản phẩm" type="button" th:onclick="'AddProductToCart(' + ${product5.id} + ', 1)'" tabindex="0">
                                                                         Thêm vào giỏ hàng
                                                                     </button>
-                                                                    <a title="Xem nhanh" th:href="@{/detailproduct/{id} (id = ${product4.id})}" data-handle="gau-bong-teddy-cute" class="btn-gray btn_view btn  right-to quick-view" tabindex="0">
+                                                                    <a title="Xem nhanh" th:href="@{/detailproduct/{id} (id = ${product5.id})}" data-handle="gau-bong-teddy-cute" class="btn-gray btn_view btn  right-to quick-view" tabindex="0">
                                                                         <i class="fa fa-eye"></i>
                                                                     </a>
                                                                 </form>
@@ -438,7 +438,7 @@
                                                                 <h3><a href="#" th:text="${product4.title}"  class="product-name" tabindex="0"></a></h3>
                                                                 <div class="price-box">
                                                                     <span class="price f-left"><span class="price product-price" th:text="${#numbers.formatCurrency(product4.priceSale)}"></span> </span>
-                                                                    <span class="old-price  f-left"><del class="sale-price" th:text="${product4.priceSale}"></del> </span>
+                                                                    <span class="old-price  f-left"><del class="sale-price" th:text="${#numbers.formatCurrency(product4.price)}"></del> </span>
                                                                 </div>
                                                             </div>
                                                         </div>

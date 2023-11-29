@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "tbl_users")
 public class User {
   @Id
   @Column(name = "id")

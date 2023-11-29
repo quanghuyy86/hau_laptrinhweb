@@ -79,6 +79,15 @@
                                                         
                                                     </div>
                                                 </div>
+                                                <div class="section owlthumb_relative_product_1 owl_nav_custome1 clearfix ">
+                                                    <div id="gallery_02" class=" owl-theme thumbnail-product thumb_product_details thumbdetail_modile_v1 not-thuongdq">
+                                                        <div class="item" th:each="images : ${product.get().productImages}">
+                                                            <a href="javascript:void(0)" th:href="@{'http://localhost:8080' + ${images.path}}">
+                                                                <img class="lazyload" data-fancybox="gallery" th:src="@{'http://localhost:8080' + ${images.path}}" data-caption="Gấu bông Teddy cute" alt="Gấu bông Teddy cute">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                             </div>
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 details-pro clearfix">
@@ -94,13 +103,13 @@
                                                     </div>
                                                     <div class="price-box clearfix">
                                                         <span class="special-price">
-                                                            <span class="price product-price" th:text="${#numbers.formatCurrency(product.get().price)}"></span>
+                                                            <span class="price product-price" th:text="${#numbers.formatCurrency(product.get().priceSale)}"></span>
                                                             <meta itemprop="price" content="500000">
                                                             <meta itemprop="priceCurrency" content="VND">
                                                         </span>
                                                         <!-- Giá Khuyến mại -->
                                                         <span class="old-price" itemprop="priceSpecification" itemscope="" itemtype="https://schema.org/priceSpecification">
-                                                            <del class="price product-price-old sale" th:text="${#numbers.formatCurrency(product.get().priceSale)}"></del>
+                                                            <del class="price product-price-old sale" th:text="${#numbers.formatCurrency(product.get().price)}"></del>
                                                             <meta itemprop="price" content="550000">
                                                             <meta itemprop="priceCurrency" content="VND">
                                                         </span>
@@ -147,10 +156,10 @@
                                                                                     <h3><span>Mô tả</span></h3>
                                                                                 </li>
                                                                                 <li class="tab-link" data-tab="tab-2">
-                                                                                    <h3><span>Tab tùy chỉnh</span></h3>
+                                                                                    <h3><span>Hướng dẫn mua hàng</span></h3>
                                                                                 </li>
                                                                                 <li class="tab-link" data-tab="tab-3">
-                                                                                    <h3><span>Đánh giá (App)</span></h3>
+                                                                                    <h3><span>Đánh giá</span></h3>
                                                                                 </li>
                                                                             </ul>
                                                                             <div class="tab-float clearfix">
@@ -160,8 +169,8 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div id="tab-2" class="tab-content clearfix">
-                                                                                    <div class="rte">
-                                                                                        Nội dung tùy chỉnh viết ở đây   
+                                                                                    <div class="rte" >
+                                                                                        <img src="https://teddy.vn/wp-content/uploads/2016/10/mua-hang-scaled.jpg">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div id="tab-3" class="tab-content clearfix">
@@ -297,7 +306,7 @@
                                         <div class="aside-item aside_product_new">
                                             <div class="aside-title">
                                                 <h2 class="title-head">
-                                                    <a href="#" title="Hàng mới về">Nước Uống</a>
+                                                    <a href="#" title="Hàng mới về">Gấu bông Teddy nhỏ</a>
                                                 </h2>
                                             </div>
                                             <div class="aside-content">
