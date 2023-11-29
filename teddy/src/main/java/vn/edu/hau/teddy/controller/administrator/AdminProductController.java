@@ -31,19 +31,26 @@ public class AdminProductController {
     public String listProduct(final Model model,
                               final @Param("keyword") String keyword,
                               final @RequestParam(name = "page", defaultValue = "0") int page) throws IOException{
-        int pageSize = 10;
+        try {
+            int pageSize = 10;
 
-        Page<Product> productList = productService.gettAllProduct(page, 5);
+            Page<Product> productList = productService.gettAllProduct(page, 5);
 
-        if(keyword != null){
-            productList = this.productService.searchPageProduct(keyword, page, pageSize);
-            model.addAttribute("keyword", keyword);
+            if(keyword != null){
+                productList = this.productService.searchPageProduct(keyword, page, pageSize);
+                model.addAttribute("keyword", keyword);
+            }
+            model.addAttribute("productList", productList);
+            model.addAttribute("productList", productList.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", productList.getTotalPages());
+            return "admin/product/product_list";
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
+            return "error/error";
         }
-        model.addAttribute("productList", productList);
-        model.addAttribute("productList", productList.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productList.getTotalPages());
-        return "admin/product/product_list";
+
     }
     @RequestMapping(value = "/admin/addproduct", method = RequestMethod.GET)
     public String addProduct(final Model model) throws IOException{
@@ -58,9 +65,16 @@ public class AdminProductController {
                               final @ModelAttribute("product") Product product,
                               final @RequestParam("productAvatar") MultipartFile avatar,
                               final @RequestParam("productPictures") MultipartFile[] picture) throws IOException {
-        productService.save(product, avatar, picture);
-        model.addAttribute("product", new Product());
-        return "redirect:/admin/productlist";
+        try {
+            productService.save(product, avatar, picture);
+            model.addAttribute("product", new Product());
+            return "redirect:/admin/productlist";
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
+            return "error/error";
+        }
+
     }
     @RequestMapping(value = "/admin/updateproduct/{id}", method = RequestMethod.GET)
     public String updateProduct(final Model model,

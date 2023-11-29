@@ -44,22 +44,28 @@ public class UserController {
   }
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
-  public String processRegistration(@ModelAttribute("user") User user) {
+  public String processRegistration(@ModelAttribute("user") User user, final Model model) {
+    try {
+      user.setPassWord(new BCryptPasswordEncoder().encode(user.getPassWord()));
 
-    user.setPassWord(new BCryptPasswordEncoder().encode(user.getPassWord()));
+      userService.save(user);
 
-    userService.save(user);
+      Role role = roleService.findRoleByName("GUEST");
+      User_Role userRole = new User_Role();
+      userRole.setUser(user);
+      userRole.setRole(role);
+      Long idUser = userRole.getUser().getId();
+      Long idRole = userRole.getRole().getId();
 
-    Role role = roleService.findRoleByName("GUEST");
-    User_Role userRole = new User_Role();
-    userRole.setUser(user);
-    userRole.setRole(role);
-    Long idUser = userRole.getUser().getId();
-    Long idRole = userRole.getRole().getId();
+      userRoleService.saveUserRole(idUser,idRole);
 
-    userRoleService.saveUserRole(idUser,idRole);
-
-    return "redirect:/login";
+      return "redirect:/login";
+    }
+    catch (Exception e){
+      e.printStackTrace();
+      model.addAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
+      return "error/error";
+    }
   }
 
   @RequestMapping(value = "/admin/register", method = RequestMethod.GET)
@@ -69,22 +75,29 @@ public class UserController {
   }
 
   @RequestMapping(value = "/admin/register", method = RequestMethod.POST)
-  public String processRegistrationAdmin(@ModelAttribute("user_admin") User user) {
+  public String processRegistrationAdmin(@ModelAttribute("user_admin") User user, final Model model) {
 
-    user.setPassWord(new BCryptPasswordEncoder().encode(user.getPassWord()));
+    try {
+      user.setPassWord(new BCryptPasswordEncoder().encode(user.getPassWord()));
 
-    userService.save(user);
+      userService.save(user);
 
-    Role role = roleService.findRoleByName("ADMIN");
-    User_Role userRole = new User_Role();
-    userRole.setUser(user);
-    userRole.setRole(role);
-    Long idUser = userRole.getUser().getId();
-    Long idRole = userRole.getRole().getId();
+      Role role = roleService.findRoleByName("ADMIN");
+      User_Role userRole = new User_Role();
+      userRole.setUser(user);
+      userRole.setRole(role);
+      Long idUser = userRole.getUser().getId();
+      Long idRole = userRole.getRole().getId();
 
-    userRoleService.saveUserRole(idUser,idRole);
+      userRoleService.saveUserRole(idUser,idRole);
 
-    return "redirect:/listadmin";
+      return "redirect:/listadmin";
+    }
+    catch (Exception e){
+      e.printStackTrace();
+      model.addAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
+      return "error/error";
+    }
   }
 
   @RequestMapping(value = "/admin/listadmin", method = RequestMethod.GET)

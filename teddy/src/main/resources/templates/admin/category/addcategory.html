@@ -100,12 +100,12 @@
                             <label >Tên Category</label>
                             <input th:field="*{name}" type="text" name="name" id="idname"  >
                         </div>
-                        <div>
+                        <div class="form-group">
                             <label >Mô tả</label>
-                            <textarea class="summernote" th:field="*{description}" autocomplete="off"   id="summernote" rows="5" cols="145" ></textarea>
+                            <input autocomplete="off" th:field="*{description}"  id="description" >
                         </div>
                         <div class="form-group div-btn">
-                            <button type="submit" class="btn-register">Thêm Category</button>
+                            <button type="submit" class="btn btn-secondary  ">Thêm Category</button>
                             <a th:href="@{/admin/categorieslist}" class="btn btn-secondary" style="float: right;">Danh sách category</a>
                         </div>
                     </form>

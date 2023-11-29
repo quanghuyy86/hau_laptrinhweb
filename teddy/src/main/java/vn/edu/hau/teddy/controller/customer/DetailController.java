@@ -23,11 +23,17 @@ public class DetailController {
     @RequestMapping(value = "/detailproduct/{id}", method = RequestMethod.GET)
     public String detailProduct(final Model model,
                                 final @PathVariable("id") Integer id){
-        Optional<Product> detailProduct = productService.findById(id);
-        List<Product> product4 = productService.findByCategoryId4();
-        model.addAttribute("product", detailProduct);
-        model.addAttribute("product4", product4);
-        return "home/detail";
+        try {
+            Optional<Product> detailProduct = productService.findById(id);
+            List<Product> product4 = productService.findByCategoryId4();
+            model.addAttribute("product", detailProduct);
+            model.addAttribute("product4", product4);
+            return "home/detail";
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
+            return "error/error";
+        }
     }
 
 }

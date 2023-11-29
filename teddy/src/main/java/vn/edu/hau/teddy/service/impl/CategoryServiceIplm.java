@@ -17,8 +17,11 @@ public class CategoryServiceIplm implements CategoryService {
     }
 
     @Override
-    public Categories save(Categories entity) {
-        return categoryRepository.save(entity);
+    public Categories save(Categories entity) throws ClassNotFoundException {
+        if(entity.getName() != null && !entity.getName().isEmpty()){
+            return categoryRepository.save(entity);
+        }
+        throw new ClassNotFoundException("Không nhập tên category");
     }
 
     @Override

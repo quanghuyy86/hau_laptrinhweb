@@ -42,29 +42,41 @@ public class AdminSaleoderController {
   @RequestMapping(value = "/admin/saleorder/{id}", method = RequestMethod.GET)
   public String saleorderProduct(final Model model,
                                  final @PathVariable("id") Integer id){
-
-    SaleOrder saleOrder = saleOderService.findSaleOrderWithProducts(id);
-    if (saleOrder != null) {
-      model.addAttribute("saleOrder", saleOrder);
-      return "admin/saleoder/saleorderproduct";
-    } else {
-      return null;
+    try {
+      SaleOrder saleOrder = saleOderService.findSaleOrderWithProducts(id);
+      if (saleOrder != null) {
+        model.addAttribute("saleOrder", saleOrder);
+        return "admin/saleoder/saleorderproduct";
+      } else {
+        return null;
+      }
+    }catch (Exception e){
+      e.printStackTrace();
+      model.addAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
+      return "error/error";
     }
+
   }
 
   @RequestMapping(value = "/admin/saleorder/{id}", method = RequestMethod.POST)
-  public String confirmSaleOrder(@PathVariable Integer id) {
+  public String confirmSaleOrder(@PathVariable Integer id,
+                                 final Model model) {
 
-    SaleOrder saleOrder = saleOderService.findSaleOrderWithProducts(id);
-    // Hoặc thực hiện xử lý khác
-    if (saleOrder != null) {
-      saleOrder.setStatus(true); // Đánh dấu đơn hàng đã được xác nhận
-      saleOderService.save(saleOrder); // Lưu lại đơn hàng đã cập nhật
-      return "redirect:/admin/saleorder";
-      // Redirect hoặc thực hiện hành động khác sau khi xác nhận thành công
-    } else {
-      return null;
-      // Xử lý trường hợp không tìm thấy đơn hàng
+    try {
+      SaleOrder saleOrder = saleOderService.findSaleOrderWithProducts(id);
+      // Hoặc thực hiện xử lý khác
+      if (saleOrder != null) {
+        saleOrder.setStatus(true); // Đánh dấu đơn hàng đã được xác nhận
+        saleOderService.save(saleOrder); // Lưu lại đơn hàng đã cập nhật
+        return "redirect:/admin/saleorder";
+      } else {
+        return null;
+        // Xử lý trường hợp không tìm thấy đơn hàng
+      }
+    }catch (Exception e){
+      e.printStackTrace();
+      model.addAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
+      return "error/error";
     }
   }
 

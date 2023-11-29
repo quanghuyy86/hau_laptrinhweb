@@ -24,7 +24,7 @@ public interface ContactService {
     Iterable<Contact> findAll();
 
 
-    void deleteById(Integer integer);
+    Boolean deleteById(Integer integer);
 
 
 

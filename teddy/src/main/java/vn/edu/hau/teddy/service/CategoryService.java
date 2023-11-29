@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
-    Categories save(Categories entity);
+    Categories save(Categories entity) throws ClassNotFoundException;
 
     Categories updateCategory(Integer id, Categories categories);
 

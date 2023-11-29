@@ -42,7 +42,6 @@ public interface ProductService {
 
     Iterable<Product> findAll();
 
-    long count();
 
     Boolean deleteById(Integer integer);
 }

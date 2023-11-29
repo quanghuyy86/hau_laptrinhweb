@@ -20,15 +20,27 @@ public class ContactController {
 
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String Contact(final Model model) throws IOException{
-        model.addAttribute("contactEntity", new Contact());
-        return "home/contact";
+        try {
+            model.addAttribute("contactEntity", new Contact());
+            return "home/contact";
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
+            return "error/error";
+        }
     }
     @RequestMapping(value = "/contactUs", method = RequestMethod.POST)
     public String contactUs(final @ModelAttribute("contactEntity")Contact contact,
                             final Model model) throws IOException{
-        contactService.save(contact);
-        model.addAttribute("contactEntity", new Contact());
-        return "home/contact";
+        try {
+            contactService.save(contact);
+            model.addAttribute("contactEntity", new Contact());
+            return "home/contact";
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
+            return "error/error";
+        }
     }
 
 

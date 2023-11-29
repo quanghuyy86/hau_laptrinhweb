@@ -32,36 +32,39 @@ public class ProductServiceIplm implements ProductService {
         this.productRepository = productRepository;
     }
 
-    private boolean isEmptyUploadFile(MultipartFile image){
+    private boolean isEmptyUploadFile(MultipartFile image) {
         return image == null || image.getOriginalFilename().isEmpty();
     }
 
-    private boolean isEmptyUploadFile(MultipartFile[] image){
-        if(image == null || image.length <= 0){
+    private boolean isEmptyUploadFile(MultipartFile[] image) {
+        if (image == null || image.length <= 0) {
             return true;
         }
-        if(image.length == 1 && image[0].getOriginalFilename().isEmpty()){
+        if (image.length == 1 && image[0].getOriginalFilename().isEmpty()) {
             return true;
         }
         return false;
     }
 
-    private String getUniqueUploadFileName(String fileName) { //hàm dùng để nếu trùng tên ảnh thì gen ra tên ảnh khác biệt
+    private String getUniqueUploadFileName(
+        String fileName) { //hàm dùng để nếu trùng tên ảnh thì gen ra tên ảnh khác biệt
         String[] splitFileName = fileName.split("\\.");
         return splitFileName[0] + System.currentTimeMillis() + "." + splitFileName[1];
     }
+
     @Override
     @Transactional
-    public Product save(Product entity, MultipartFile avatar, MultipartFile[] picture) throws IOException {
+    public Product save(Product entity, MultipartFile avatar, MultipartFile[] picture)
+        throws IOException {
         HtmlUtils.htmlEscape(entity.getDetail());
         HtmlUtils.htmlEscape(entity.getShortDes());
-        if(!isEmptyUploadFile(avatar)){
+        if (!isEmptyUploadFile(avatar)) {
             Path filaeNameAndPath = Paths.get(UPLOAD_DIRECTORY, avatar.getOriginalFilename());
             Files.write(filaeNameAndPath, avatar.getBytes());
             entity.setAvatar("/uploads/" + avatar.getOriginalFilename());
         }
-        if(!isEmptyUploadFile(picture)){
-            for (MultipartFile pic : picture){
+        if (!isEmptyUploadFile(picture)) {
+            for (MultipartFile pic : picture) {
                 Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, pic.getOriginalFilename());
                 Files.write(fileNameAndPath, pic.getBytes());
 
@@ -73,12 +76,14 @@ public class ProductServiceIplm implements ProductService {
         }
         return productRepository.save(entity);
     }
+
     @Override
     @Transactional
-    public Product updateProduct(Integer id,Product product, MultipartFile avatar, MultipartFile[] picture) throws IOException{
-        if(product != null){
+    public Product updateProduct(Integer id, Product product, MultipartFile avatar,
+        MultipartFile[] picture) throws IOException {
+        if (product != null) {
             Optional<Product> product1 = productRepository.findById(id);
-            if(product1 != null){
+            if (product1 != null) {
                 product1.get().setTitle(product.getTitle());
                 product1.get().setPrice(product.getPrice());
                 product1.get().setPriceSale(product.getPriceSale());
@@ -87,21 +92,23 @@ public class ProductServiceIplm implements ProductService {
                 product1.get().setCategories(product.getCategories());
                 product1.get().setStatus(product.getStatus());
 
-                if(!isEmptyUploadFile(avatar)){
+                if (!isEmptyUploadFile(avatar)) {
                     new File(System.getProperty("user.dir") + product1.get().getAvatar()).delete();
 
                     String fileName = avatar.getOriginalFilename();
                     avatar.transferTo(new File(UPLOAD_DIRECTORY + fileName));
-                    product1.get().setAvatar("/uploads/"+fileName);
+                    product1.get().setAvatar("/uploads/" + fileName);
                 }
 
-                if(!isEmptyUploadFile(avatar)){
-                    if(product1.get().getProductImages() != null && product1.get().getProductImages().size() > 0){
-                        for (ProductImages opi : product1.get().getProductImages()){
-                            new File(System.getProperty("user.dir") + product1.get().getAvatar()).delete();
+                if (!isEmptyUploadFile(avatar)) {
+                    if (product1.get().getProductImages() != null
+                        && product1.get().getProductImages().size() > 0) {
+                        for (ProductImages opi : product1.get().getProductImages()) {
+                            new File(System.getProperty("user.dir") + product1.get()
+                                .getAvatar()).delete();
                         }
                     }
-                    for (MultipartFile pic : picture){
+                    for (MultipartFile pic : picture) {
                         String fileName = pic.getOriginalFilename();
 
                         pic.transferTo(new File(UPLOAD_DIRECTORY + fileName));
@@ -112,7 +119,7 @@ public class ProductServiceIplm implements ProductService {
                         product.addProductImages(pi);
                     }
                 }
-            return productRepository.save(product1.get());
+                return productRepository.save(product1.get());
 
             }
         }
@@ -137,25 +144,27 @@ public class ProductServiceIplm implements ProductService {
         List list = this.searchProduct(keyword);
 
         Pageable pageable = PageRequest.of(page, pageSize);
-        Integer start = (int)pageable.getOffset();
-        Integer end = Math.toIntExact((pageable.getOffset() + pageable.getPageSize()) > list.size() ? list.size() : pageable.getOffset() + pageable.getPageSize());
+        Integer start = (int) pageable.getOffset();
+        Integer end = Math.toIntExact(
+            (pageable.getOffset() + pageable.getPageSize()) > list.size() ? list.size()
+                : pageable.getOffset() + pageable.getPageSize());
 
         list = list.subList(start, end);
         return new PageImpl<Product>(list, pageable, this.searchProduct(keyword).size());
     }
 
     @Override
-    public List<Product> findByCategoryId1(){
+    public List<Product> findByCategoryId1() {
         return productRepository.findProductsInCategory1();
     }
 
     @Override
-    public List<Product> findByCategoryId2(){
+    public List<Product> findByCategoryId2() {
         return productRepository.findProductsInCategory2();
     }
 
     @Override
-    public List<Product> findByCategoryId3(){
+    public List<Product> findByCategoryId3() {
         return productRepository.findProductsInCategory3();
     }
 
@@ -172,7 +181,7 @@ public class ProductServiceIplm implements ProductService {
 
     @Override
     public List<Product> saveAll(List<Product> entities) {
-        return (List<Product>)productRepository.saveAll(entities);
+        return (List<Product>) productRepository.saveAll(entities);
     }
 
     @Override
@@ -190,22 +199,21 @@ public class ProductServiceIplm implements ProductService {
         return productRepository.findAll();
     }
 
-
-    @Override
-    public long count() {
-        return productRepository.count();
-    }
-
     @Override
     public Boolean deleteById(Integer id) {
         try {
             Optional<Product> product = productRepository.findById(id);
-            product.get().setDelete(true);
-            return true;
-        }catch (Exception e){
+            if (product.isPresent()) {
+                product.get().setDelete(true);
+                this.productRepository.save(product.get());
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
             return false;
         }
     }
+
 
 
 }

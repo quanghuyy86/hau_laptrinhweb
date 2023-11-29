@@ -71,8 +71,13 @@ public class ContactServiceIplm implements ContactService {
 
 
     @Override
-    public void deleteById(Integer integer) {
-        contactRepository.deleteById(integer);
+    public Boolean deleteById(Integer id) {
+        Optional<Contact> contact = contactRepository.findById(id);
+        if(contact.isPresent()){
+            contact.get().setDelete(true);
+            contactRepository.save(contact.get());
+        }
+        return false;
     }
 
 }
