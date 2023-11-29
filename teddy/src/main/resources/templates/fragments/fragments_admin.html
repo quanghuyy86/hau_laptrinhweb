@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https:www.thymeleaf.org/extras/spring-security6">
+<head>
+  <meta charset="UTF-8">
+  <title>Fragments Admin</title>
+</head>
+<body>
+<div th:fragment="siderbar_admin">
+  <nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+      <a class="sidebar-brand" href="index.html">
+        <span class="align-middle" sec:authentication="name"></span>
+      </a>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-item">
+          <a class="sidebar-link"  href="#">
+            <i class="align-middle" ></i> <span class="align-middle">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a class="sidebar-link" th:href="@{/home}" href="#">
+            <i class="align-middle" ></i> <span class="align-middle">Trang chủ</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a class="sidebar-link" th:href="@{/admin/listadmin}">
+            <i class="align-middle" ></i> <span class="align-middle">Admin</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" th:href="@{/admin/contact}">
+            <i class="align-middle" ></i> <span class="align-middle">Liên hệ</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" th:href="@{/admin/categorieslist}">
+            <i class="align-middle" ></i> <span class="align-middle">Loại sản phẩm</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" th:href="@{/admin/productlist}">
+            <i class="align-middle" ></i> <span class="align-middle">Danh sách sản phẩm</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#" th:href="@{/admin/saleorder}">
+            <i class="align-middle" ></i> <span class="align-middle">Hóa đơn</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div th:fragment="navbar">
+  <nav class="navbar navbar-expand navbar-light navbar-bg">
+    <a class="sidebar-toggle js-sidebar-toggle">
+      <i class="hamburger align-self-center"></i>
+    </a>
+
+    <div class="navbar-collapse collapse">
+      <ul class="navbar-nav navbar-align">
+        <li class="nav-item dropdown">
+          <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+            <i class="align-middle" data-feather="settings"></i>
+          </a>
+
+          <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+            <span class="text-dark">
+                <span sec:authentication="name"></span>
+            </span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+            <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
+            <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" th:href="@{/logout}">Log out</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+</body>
+</html>
