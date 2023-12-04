@@ -36,7 +36,7 @@ function DeleteProductTocart(btnDeleteObj, productId, deleteUrl) {
     let data = {
         productId: productId,
     };
-    console.log("123")
+    console.log("123"),
     //$===jQuery
     //json == javascript object
     jQuery.ajax({

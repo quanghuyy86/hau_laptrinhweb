@@ -21,7 +21,8 @@ public class ContactController {
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String Contact(final Model model) throws IOException{
         try {
-            model.addAttribute("contactEntity", new Contact());
+            Contact contact = new Contact();
+            model.addAttribute("contactEntity", contact);
             return "home/contact";
         }catch (Exception e){
             e.printStackTrace();

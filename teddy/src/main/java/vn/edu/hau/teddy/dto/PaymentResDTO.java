@@ -1,4 +1,4 @@
-package vn.edu.hau.teddy.controller.dto;
+package vn.edu.hau.teddy.dto;
 
 import java.io.Serializable;
 import lombok.Getter;
@@ -6,8 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TransactionStatusDTO implements Serializable {
+public class PaymentResDTO implements Serializable {
   private String status;
   private String message;
-  private String data;
+  private String URL;
+
 }

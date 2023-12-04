@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.hau.teddy.conf.Config;
-import vn.edu.hau.teddy.controller.dto.PaymentResDTO;
-import vn.edu.hau.teddy.controller.dto.TransactionStatusDTO;
+import vn.edu.hau.teddy.dto.PaymentResDTO;
+import vn.edu.hau.teddy.dto.TransactionStatusDTO;
 import vn.edu.hau.teddy.dto.Cart;
 import vn.edu.hau.teddy.dto.CartItem;
 

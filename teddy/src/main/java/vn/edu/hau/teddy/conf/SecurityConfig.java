@@ -27,9 +27,9 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ADMIN")
                 .requestMatchers(new AntPathRequestMatcher("/home/**")).hasAuthority("GUEST")
                 .anyRequest().authenticated())
-                .formLogin(login->login.loginPage("/login").loginProcessingUrl("/login").
-                usernameParameter("username").passwordParameter("password").
-                defaultSuccessUrl("/",true))
+                .formLogin(login->login.loginPage("/login").loginProcessingUrl("/login")
+                .usernameParameter("username").passwordParameter("password")
+                .defaultSuccessUrl("/",true))
                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"));
     return http.build();
   }

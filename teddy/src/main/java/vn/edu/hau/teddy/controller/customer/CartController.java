@@ -39,15 +39,12 @@ import vn.edu.hau.teddy.service.SaleOderService;
 public class CartController {
 
     private final ProductService productService;
-
-
     private final SaleOderService saleOderService;
 
     public CartController(ProductService productService, SaleOderService saleOderService) {
         this.productService = productService;
         this.saleOderService = saleOderService;
     }
-
 
     @RequestMapping(value = { "/addToCart" }, method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> ajax_AddToCart(final Model model,
@@ -101,6 +98,130 @@ public class CartController {
         return ResponseEntity.ok(jsonResult);
     }
 
+    @RequestMapping(value = {"/cart"}, method = RequestMethod.GET)
+    public String cartCheckout(final Model model,
+        final HttpServletRequest request
+    )throws IOException {
+        HttpSession session = request.getSession();
+
+        Cart cart = (Cart) session.getAttribute("cart");
+
+        if (cart != null && cart.getCartItems().size() > 0) {
+            return "cart/cart";
+        } else {
+            return "cart/cartnull";
+        }
+    }
+
+    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
+    public String checkOut(final Model model,
+                           final @ModelAttribute("saleOrder") SaleOrder SaleOrder,
+                           final HttpServletRequest request) throws UnsupportedEncodingException {
+//        String url = createPayment(request);
+//        model.addAttribute("vnpay", url);
+        return "cart/checkout";
+    }
+
+    @RequestMapping(value = "/checkout", method = RequestMethod.POST)
+    public String saveCheckOut(final Model model,
+        final HttpServletRequest request,
+        final @RequestParam("pay") String paymentMethod,
+        final @ModelAttribute("saleOrder") SaleOrder saleOrder)
+        throws UnsupportedEncodingException {
+
+        saleOrder.setCode(String.valueOf(System.currentTimeMillis()));
+        saleOrder.setTotal(getTotalPrice(request));
+        saleOrder.setStatus(false);
+
+        HttpSession session = request.getSession();
+        Cart cart = (Cart) session.getAttribute("cart");
+
+        for(CartItem cartItem : cart.getCartItems()){
+            SaleOrderProducts saleOrderProducts = new SaleOrderProducts();
+            Optional<Product> productOptional = productService.findById(cartItem.getProductId());
+            if (productOptional.isPresent()) {
+                Product product = productOptional.get();
+                // Gán sản phẩm cho SaleOrderProducts
+                saleOrderProducts.setProduct(product);
+                saleOrderProducts.setQuality(cartItem.getQuanlity());
+
+                saleOrder.addSaleOrderProducts(saleOrderProducts);
+            } else {
+//                return "redirect:/home";
+            }
+
+        }
+        if("VnPay".equals(paymentMethod)){
+            String urlVnPay = createPayment(request);
+            session.setAttribute("cart", null);
+            session.setAttribute("totalItems", 0);
+
+            saleOderService.save(saleOrder);
+            Integer id = saleOrder.getId();
+            session.setAttribute("id", id);
+            return "redirect:" + urlVnPay;
+        }
+        saleOderService.save(saleOrder);
+        session.setAttribute("cart", null);
+        session.setAttribute("totalItems", 0);
+        return "redirect:/success";
+    }
+
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    public String check(final Model model,
+                        final HttpServletRequest request){
+        String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
+        if (vnp_ResponseCode != null && vnp_ResponseCode.equals("00")) {
+            return "redirect:/success";
+        } else {
+            HttpSession session = request.getSession();
+            Integer id = (Integer) session.getAttribute("id");
+            saleOderService.deleteById(id);
+            session.setAttribute("id", null);
+            return "redirect:/failure";
+        }
+    }
+
+    @RequestMapping(value = { "/cart/deleteitem" }, method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> productDelete(final Model model,
+                                                             final HttpServletRequest request,
+                                                             final @RequestBody CartItem cartItem) {
+
+        HttpSession session = request.getSession();
+
+        Cart cart = (Cart) session.getAttribute("cart");
+        List<CartItem> cartItems = cart.getCartItems();
+
+        Iterator<CartItem> iterator = cartItems.iterator();
+        while (iterator.hasNext()) {
+            CartItem item = iterator.next();
+            if(item.getProductId() == cartItem.getProductId()) {
+                iterator.remove();
+                break;
+            }
+        }
+
+        Map<String, Object> jsonResult = new HashMap<String, Object>();
+        jsonResult.put("code", 200);
+        jsonResult.put("message", "Đã xóa thành công");
+        jsonResult.put("totalPrice", getTotalPrice(request));
+
+        session.setAttribute("totalItems", getTotalItems(request));
+        session.setAttribute("totalPrice", getTotalPrice(request));
+
+        return ResponseEntity.ok(jsonResult);
+    }
+
+    @RequestMapping(value = "/success", method = RequestMethod.GET)
+    public String checkOutSuccess(final Model model){
+        return "cart/checkoutsuccess";
+    }
+
+    @RequestMapping(value = "/failure", method = RequestMethod.GET)
+    public String checkOutFaild(final Model model){
+        return "cart/failure";
+    }
+
     private int getTotalItems(final HttpServletRequest request) {
         HttpSession httpSession = request.getSession();
 
@@ -137,28 +258,6 @@ public class CartController {
 
         return total;
     }
-    @RequestMapping(value = {"/cart"}, method = RequestMethod.GET)
-    public String cartCheckout(final Model model,
-        final HttpServletRequest request
-    )throws IOException {
-        HttpSession session = request.getSession();
-
-        if (session.getAttribute("cart") != null) {
-            return "cart/cart";
-        } else {
-            return "cart/cartnull";
-        }
-    }
-
-    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-    public String checkOut(final Model model,
-                           final @ModelAttribute("saleOrder") SaleOrder SaleOrder,
-                           final HttpServletRequest request) throws UnsupportedEncodingException {
-//        String url = createPayment(request);
-//        model.addAttribute("vnpay", url);
-        return "cart/checkout";
-    }
-
 
     public String createPayment(final HttpServletRequest request) throws UnsupportedEncodingException {
 
@@ -219,108 +318,4 @@ public class CartController {
 
         return paymentUrl;
     }
-
-    @RequestMapping(value = "/check", method = RequestMethod.GET)
-    public String check(final Model model,
-                        final HttpServletRequest request){
-        String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
-        if (vnp_ResponseCode != null && vnp_ResponseCode.equals("00")) {
-            return "redirect:/success";
-        } else {
-            HttpSession session = request.getSession();
-            Integer id = (Integer) session.getAttribute("id");
-            saleOderService.deleteById(id);
-            session.setAttribute("id", null);
-            return "redirect:/failure";
-        }
-    }
-
-    @RequestMapping(value = "/checkout", method = RequestMethod.POST)
-    public String saveCheckOut(final Model model,
-                               final HttpServletRequest request,
-                               final @RequestParam("pay") String paymentMethod,
-                               final @ModelAttribute("saleOrder") SaleOrder saleOrder)
-        throws UnsupportedEncodingException {
-
-        saleOrder.setCode(String.valueOf(System.currentTimeMillis()));
-        saleOrder.setTotal(getTotalPrice(request));
-        saleOrder.setStatus(false);
-
-        HttpSession session = request.getSession();
-        Cart cart = (Cart) session.getAttribute("cart");
-
-        for(CartItem cartItem : cart.getCartItems()){
-            SaleOrderProducts saleOrderProducts = new SaleOrderProducts();
-            Optional<Product> productOptional = productService.findById(cartItem.getProductId());
-            if (productOptional.isPresent()) {
-                Product product = productOptional.get();
-                // Gán sản phẩm cho SaleOrderProducts
-                saleOrderProducts.setProduct(product);
-                saleOrderProducts.setQuality(cartItem.getQuanlity());
-
-                saleOrder.addSaleOrderProducts(saleOrderProducts);
-            } else {
-//                return "redirect:/home";
-            }
-
-        }
-        if("VnPay".equals(paymentMethod)){
-            String urlVnPay = createPayment(request);
-            session.setAttribute("cart", null);
-            session.setAttribute("totalItems", 0);
-
-            saleOderService.save(saleOrder);
-            Integer id = saleOrder.getId();
-            session.setAttribute("id", id);
-            return "redirect:" + urlVnPay;
-        }
-            saleOderService.save(saleOrder);
-            session.setAttribute("cart", null);
-            session.setAttribute("totalItems", 0);
-            return "redirect:/success";
-    }
-
-
-
-
-    @RequestMapping(value = { "/cart/deleteitem" }, method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> productDelete(final Model model,
-                                                             final HttpServletRequest request,
-                                                             final @RequestBody CartItem cartItem) {
-
-        HttpSession session = request.getSession();
-
-        Cart cart = (Cart) session.getAttribute("cart");
-        List<CartItem> cartItems = cart.getCartItems();
-
-        Iterator<CartItem> iterator = cartItems.iterator();
-        while (iterator.hasNext()) {
-            CartItem item = iterator.next();
-            if(item.getProductId() == cartItem.getProductId()) {
-                iterator.remove();
-                break;
-            }
-        }
-
-        Map<String, Object> jsonResult = new HashMap<String, Object>();
-        jsonResult.put("code", 200);
-        jsonResult.put("message", "Đã xóa thành công");
-        jsonResult.put("totalPrice", getTotalPrice(request));
-
-        session.setAttribute("totalItems", getTotalItems(request));
-        session.setAttribute("totalPrice", getTotalPrice(request));
-
-        return ResponseEntity.ok(jsonResult);
-    }
-
-    @RequestMapping(value = "/success", method = RequestMethod.GET)
-    public String checkOutSuccess(final Model model){
-        return "cart/checkoutsuccess";
-    }
-
-    @RequestMapping(value = "/failure", method = RequestMethod.GET)
-    public String checkOutFaild(final Model model){
-        return "cart/failure";
-    }
-
 }

@@ -52,12 +52,20 @@ public class CategoryServiceIplm implements CategoryService {
 
     @Override
     public List<Categories> findAll() {
-        return (List<Categories>) categoryRepository.findAll();
+        return categoryRepository.getCategories();
     }
 
     @Override
-    public void deleteById(Integer integer) {
-        categoryRepository.deleteById(integer);
+    public Boolean deleteById(Integer id) {
+        Optional<Categories> categories = categoryRepository.findById(id);
+        if(categories.isPresent()){
+            categories.get().setDelete(true);
+            categoryRepository.save(categories.get());
+        }
+        else{
+            return null;
+        }
+        return false;
     }
 
     @Override

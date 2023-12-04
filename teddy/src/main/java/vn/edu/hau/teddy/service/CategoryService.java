@@ -19,7 +19,7 @@ public interface CategoryService {
     List<Categories> findAll();
 
 
-    void deleteById(Integer integer);
+    Boolean deleteById(Integer integer);
 
     void delete(Categories entity);
 
